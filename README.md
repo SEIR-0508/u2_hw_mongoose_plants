@@ -38,7 +38,7 @@ mongodb-mongoose-express-using-router/db/index.js
 const mongoose = require('mongoose')
 
 mongoose
-    .connect(mongodb://127.0.0.1:27017/plantsDatabase)
+    .connect('mongodb://127.0.0.1:27017/plantsDatabase')
     .then(() => {
         console.log('Successfully connected to MongoDB.')
     })
@@ -60,10 +60,7 @@ Although, MongoDB is schema-less, Mongoose allows us to write a schema for our p
 models/plant.js
 ```js
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema
-
-
-db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+const  { Schema } = require('mongoose')
 
 const Plant = new Schema(
     {
@@ -126,7 +123,7 @@ node seed/plants.js
 So how do we know if it worked? We could drop into the `mongo` interactive shell and check:
 
 ```mongo
-mongo
+mongosh
 > use plantsDatabase
 > db.plants.find()
 > exit
@@ -162,7 +159,7 @@ Add the scripts to your `package.json`:
 And now let's setup our express folders:
 
 ```sh
-mkdir routes controllers
+mkdir  controllers
 touch server.js  controllers/plantController.js
 ```
 
@@ -222,18 +219,6 @@ u2_hw_mongoose_plants/controllers/index.js
 ```js
 const Plant = require('../models/plant');
 
-const createPlant = async (req, res) => {
-    try {
-        const plant = await new Plant(req.body)
-        await plant.save()
-        return res.status(201).json({
-            plant,
-        });
-    } catch (error) {
-        return res.status(500).json({ error: error.message })
-    }
-}
-
 const getAllPlants = async (req, res) => {
     try {
         const plants = await Plant.find()
@@ -248,7 +233,7 @@ module.exports = {
 }
 ```
 
-Add the following route to your ./routes/index.js file:
+Add the following route to your server.js file:
 ```js
 app.get('/plants', controllers.getAllPlants)
 ```
