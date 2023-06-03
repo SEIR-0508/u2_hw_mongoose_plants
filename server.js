@@ -3,7 +3,7 @@ const controllers = require('./controllers/plantController.js')
 //why cant this be req instead of require? 
 //const db = require('./db')
 
-//middleware fore require
+//was supposed to do morgan stuff here but I'll consider this bonus bc it'll require hours of research
 
 const PORT = process.env.PORT || 3001
 
