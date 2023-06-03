@@ -23,5 +23,6 @@ const getAll = (req, res) => {
 }
 
 app.get('/plants', controllers.getAll)
+app.get('/plants/:id', controllers.getById)
 
 app.listen(PORT, () => console.log(`port ${3001} is listening`))
