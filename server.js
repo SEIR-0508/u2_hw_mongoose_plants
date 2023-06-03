@@ -1,6 +1,7 @@
 const express = require('express')
+const controllers = require('./controllers/plantController.js')
 //why cant this be req instead of require? 
-const db = require('./db')
+//const db = require('./db')
 
 //middleware fore require
 
@@ -15,7 +16,11 @@ app.get('/', (req, res) => {
 //remember that controllers directory is handling all the FUNCTIONS and I am calling the ENDPOINT here
     // dont get confuse
         // you're gonna get confused though
-
+const getAll = (req, res) => {
+    response.send({
+        msg:'getting plants'
+    })
+}
 
 app.get('/plants', controllers.getAll)
 
