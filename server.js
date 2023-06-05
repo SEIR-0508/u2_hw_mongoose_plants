@@ -26,5 +26,6 @@ app.get('/plants', controllers.getAllPlants)
 // GET PLANT BY ID 
 app.get('/plants/:id', controllers.getPlantById)
 
-
+// CREATE PLANT
+app.post('/plants', controllers.createPlant)
 
