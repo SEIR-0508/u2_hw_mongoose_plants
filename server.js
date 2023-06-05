@@ -22,3 +22,9 @@ app.get('/plants', controller.getAllPlants)
 
 app.get('/plants/:id', controller.getPlant)
 
+app.post('/plants', controller.createPlant)
+
+app.put('/plants/:id', controller.updatePlant)
+
+app.delete('/plants/:id', controller.deletePlant)
+

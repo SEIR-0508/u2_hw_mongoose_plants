@@ -33,7 +33,36 @@ const getPlant = async(req,res)=>{
     }
 }
 
+const updatePlant = async(req,res)=>{
+    try{
+        let { id } = req.params
+        let plant = await Plant.findByIdAndUpdate(id, req.body, { new:true })
+        if (plant){
+            return res.status(200).json(plant)
+        }
+        throw new Error('Plant not found')
+    } catch(error) {
+        return res.status(500).send(error.message)
+    }
+}
+
+const deletePlant = async(req,res)=> {
+    try{
+        const { id } = req.params
+        const deletedPlant = await Plant.findByIdAndDelete(id, req.body, { new:true })
+        if(deletedPlant){
+            return res.status(200).json(deletedPlant)
+        }
+        throw new Error('Plant not found')
+    } catch (error){
+        return res.status(500).send(error.message)
+    }
+}
+
 module.exports = {
     getAllPlants,
-    getPlant
+    getPlant,
+    createPlant,
+    updatePlant,
+    deletePlant
 }
