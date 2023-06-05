@@ -9,6 +9,16 @@ const getAllPlants = async(req,res) => {
     }
 }
 
+const createPlant = async(req,res)=> {
+    try{
+        const plant = await new Plant(req.body)
+        await plant.save()
+        return res.status(201).json({ plant })
+    } catch(error){
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 const getPlant = async(req,res)=>{
     try{
         const { id }= req.params
