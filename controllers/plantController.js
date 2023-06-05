@@ -34,8 +34,36 @@ const getPlantById = async (req, res) => {
     }
 }
 
+const updatePlant = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let plant = await Plant.findByIdAndUpdate(id, req.body, { new: true })
+        if (plant) {
+            return res.status(200).json(plant)
+        }
+        throw new Error("Plant not found")
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
+const deletePlant = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await Plant.findByIdAndDelete(id)
+        if (deleted) {
+            return res.status(200).send("Plant deleted");
+        }
+        throw new Error("Plant not found");
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
+}
+
 module.exports = {
     createPlant,
     getAllPlants,
-    getPlantById
+    getPlantById,
+    updatePlant, 
+    deletePlant
 }
