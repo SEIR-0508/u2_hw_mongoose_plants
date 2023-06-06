@@ -24,7 +24,7 @@ const getPlantById = async (req, res) => {
 
 const createPlant = async (req, res) => {
     try {
-        const plant = await new Plant(req.body)
+        const plant = await new Plant(req.query)
         await plant.save()
         return res.status(201).json({
             plant,
@@ -36,8 +36,7 @@ const createPlant = async (req, res) => {
 
 const updatePlant = async (req, res) => {
     try {
-        let { id } = req.params
-        let plant =  await Plant.findByIdAndUpdate(id, req.body, { new: true})
+        let plant =  await Plant.findByIdAndUpdate(req.query.id, {[req.query.whatToUpdate]: req.query.update})
         if (plant) {
             return res.status(200).json(plant)
         }
