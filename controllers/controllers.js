@@ -34,8 +34,6 @@ const getPlantById = async (req, res) => {
     }
 }
 
-app.get('/plants', controllers.getAllPlants)
-app.get('/plants/:id', controllers.getPlantById)
 
 module.exports = {
     createPlant,
