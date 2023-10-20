@@ -1,11 +1,11 @@
-### SEIR 0508
+### SEIR 0911
 
 # Mongoose Plants API
 
 ![barnsely's](https://i.ytimg.com/vi/iGMGVpLMtMs/maxresdefault.jpg)
 
 ## Overview
-In this deliverable we'll be building our very own custom API about plants! We'll be building it from the ground up to cover the entire process using `express.Router`.
+In this lesson we'll be building our very own custom API about plants! We'll be building it from the ground up to cover the entire process using Express.
 
 ## Getting started
 
@@ -222,7 +222,7 @@ const Plant = require('../models/plant');
 const getAllPlants = async (req, res) => {
     try {
         const plants = await Plant.find()
-        return res.status(200).json({ plants })
+        res.json(plants)
     } catch (error) {
         return res.status(500).send(error.message);
     }
@@ -238,7 +238,7 @@ Add the following route to your server.js file:
 app.get('/plants', controllers.getAllPlants)
 ```
 
-Open http://localhost:3001/api/plants in your browser or do a GET request in ThunderClient.
+Open http://localhost:3001/plants in your browser or do a GET request in ThunderClient.
 
 - You should see an JSON object with an array of all `"plants":` in the database
 - Make sure to grab the `_id` of the `"Test Plant"` we just added in the previous step, it will be useful for the next few routes.
@@ -260,7 +260,7 @@ const getPlantById = async (req, res) => {
         const { id } = req.params;
         const plant = await Plant.findById(id)
         if (plant) {
-            return res.status(200).json({ plant });
+            res.json(plant);
         }
         return res.status(404).send('Plant with the specified ID does not exists');
     } catch (error) {
@@ -287,9 +287,11 @@ app.get('/plants/:id', controllers.getPlantById)
 ```
 
 Test it! Your URL shold look like this, but with the `_id` of _your Test Plant_ in your URL `:params` :
-http://localhost:3001/api/plants/5e38921e9c3bd077f50dc9a2
+http://localhost:3001/plants/5e38921e9c3bd077f50dc9a2
 
-This is a good point to integrate better logging. Right now, if we check our terminal when we hit the http://localhost:3001/api/plants/5e38921e9c3bd077f50dc9a2 endpoint we see the raw SQL that was executed. For debugging purposes and overall better logging we're going to use an express middleware called `morgan`:
+
+## Bonus 1
+This is a good point to integrate better logging. Right now, if we check our terminal when we hit the http://localhost:3001/plants/5e38921e9c3bd077f50dc9a2 endpoint we see the raw SQL that was executed. For debugging purposes and overall better logging we're going to use an express middleware called `morgan`:
 
 ```sh
 npm install morgan
@@ -334,8 +336,10 @@ npm run dev
 
 In another terminal, run:
 ```
-open http://localhost:3001/api/plants/5e38921e9c3bd077f50dc9a2
+open http://localhost:3001/plants/5e38921e9c3bd077f50dc9a2
 ```
+
+Note! Your endpoints may be a bit different, if the above ID (5e38921e9c....) comes back with a 404 error, replace that with one of the ID's in your plants db
 
 You should now see in your server's terminal something like this:
 ```sh
@@ -348,7 +352,7 @@ That's `morgan`! That's some good logging!
 
 
 
-## Bonus! Create, Update, and Delete!
+## Bonus 2! Create, Update, and Delete!
 
 #### createPlant
 
@@ -430,7 +434,7 @@ app.post('/plants', plantController.createPlant)
 ```
 
 
-Use ThunderClient to send a POST method to test the create route (http://localhost:3001/api/plants):
+Use ThunderClient to send a POST method to test the create route (http://localhost:3001/plants):
 
 ```js
 {
@@ -523,7 +527,7 @@ http://localhost:3001/plants/5e38921e9c3bd077f50dc9a2
 }
 ```
 
-Test delete (DEL) in ThunderClient using a URL like this http://localhost:3001/api/plants/5e38921e9c3bd077f50dc9a2
+Test delete (DEL) in ThunderClient using a URL like this http://localhost:3001/plants/5e38921e9c3bd077f50dc9a2
 
 Success! We built a full CRUD JSON API in MongoDB, Mongoose, and Express using Express Router! 
 
